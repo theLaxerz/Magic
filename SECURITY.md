@@ -65,6 +65,7 @@ This application implements the following security measures:
 
 ### Additional Security Measures
 - CORS configuration
+- CSRF protection with Double Submit Cookie pattern
 - Cookie security with httpOnly and secure flags
 - Compression with gzip
 - Graceful error handling

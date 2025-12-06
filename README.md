@@ -57,6 +57,7 @@ An exemplary security project showcasing best practices for JavaScript, web appl
 - ✅ Graceful error handling
 - ✅ Environment variable validation
 - ✅ Secure cookie handling
+- ✅ CSRF protection with Double Submit Cookie pattern
 - ✅ Compression with security considerations
 
 ## 📋 Prerequisites

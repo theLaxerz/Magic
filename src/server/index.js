@@ -14,6 +14,7 @@ import logger from '../config/logger.js';
 import { connectDB } from '../config/database.js';
 import { generalLimiter } from '../middleware/rateLimiter.js';
 import { errorHandler, notFound } from '../middleware/errorHandler.js';
+import { attachCsrfToken, csrfProtection } from '../middleware/csrf.js';
 
 // Import routes
 import authRoutes from '../routes/authRoutes.js';
@@ -84,6 +85,10 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // Cookie parser
 app.use(cookieParser());
 
+// CSRF protection for cookie-based authentication
+// Applied globally but only checks non-GET/HEAD/OPTIONS requests
+app.use(attachCsrfToken);
+
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -109,7 +114,7 @@ app.use((req, res, next) => {
 // ROUTES
 // ============================================
 
-// Health check endpoint
+// Health check endpoint (no CSRF needed for GET)
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
@@ -118,6 +123,16 @@ app.get('/health', (req, res) => {
     environment: config.env,
   });
 });
+
+// CSRF token endpoint for clients
+app.get('/api/csrf-token', (req, res) => {
+  res.json({
+    csrfToken: res.locals.csrfToken,
+  });
+});
+
+// Apply CSRF protection to all API routes that modify data
+app.use('/api/', csrfProtection);
 
 // API routes
 app.use('/api/auth', authRoutes);
