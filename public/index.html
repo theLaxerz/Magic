@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <title>Magic Secure App - Security Best Practices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-card li {
+            padding: 5px 0;
+        }
+
+        .feature-card li:before {
+            content: "✅ ";
+            margin-right: 5px;
+        }
+
+        .api-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .endpoint {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #10b981;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .method.post { background: #3b82f6; }
+        .method.get { background: #10b981; }
+        .method.put { background: #f59e0b; }
+        .method.delete { background: #ef4444; }
+
+        code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .health-check {
+            text-align: center;
+            padding: 20px;
+            background: #10b981;
+            color: white;
+            border-radius: 8px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .health-check:hover {
+            background: #059669;
+        }
+
+        .health-status {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        .link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Magic Secure App</h1>
+            <p>An exemplary security project for JavaScript, Web Applications, and AI/MCPs</p>
+            <div>
+                <span class="badge">Node.js ≥18.0.0</span>
+                <span class="badge">Express.js</span>
+                <span class="badge">MongoDB</span>
+                <span class="badge">JWT Auth</span>
+                <span class="badge">AI/MCP Security</span>
+            </div>
+        </header>
+
+        <div class="health-check" onclick="checkHealth()">
+            <h3>🏥 Check Server Health</h3>
+            <p>Click to verify server status</p>
+            <div id="healthStatus" class="health-status"></div>
+        </div>
+
+        <div class="section">
+            <h2>🌟 Key Security Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Authentication & Authorization</h3>
+                    <ul>
+                        <li>JWT-based authentication</li>
+                        <li>Bcrypt password hashing</li>
+                        <li>Role-based access control</li>
+                        <li>Strong password requirements</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Input Validation</h3>
+                    <ul>
+                        <li>XSS protection</li>
+                        <li>NoSQL injection prevention</li>
+                        <li>Parameter pollution prevention</li>
+                        <li>Request size limits</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>API Security</h3>
+                    <ul>
+                        <li>Rate limiting (endpoint-specific)</li>
+                        <li>CORS configuration</li>
+                        <li>Comprehensive error handling</li>
+                        <li>Request validation</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Security Headers</h3>
+                    <ul>
+                        <li>Content Security Policy</li>
+                        <li>HSTS with preload</li>
+                        <li>X-Frame-Options: DENY</li>
+                        <li>Referrer-Policy: no-referrer</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Database Security</h3>
+                    <ul>
+                        <li>Secure MongoDB connections</li>
+                        <li>Parameterized queries</li>
+                        <li>TLS/SSL in production</li>
+                        <li>Connection pooling</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>AI/MCP Security 🤖</h3>
+                    <ul>
+                        <li>Prompt injection prevention</li>
+                        <li>Input validation for AI</li>
+                        <li>Content filtering</li>
+                        <li>Audit logging</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 API Endpoints</h2>
+            <div class="api-section">
+                <h3>Authentication</h3>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/auth/register</code>
+                    <p>Register a new user with strong password requirements</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/auth/login</code>
+                    <p>Login and receive JWT token (Rate limit: 5/15min)</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <code>/api/auth/me</code>
+                    <p>Get current user profile (requires authentication)</p>
+                </div>
+
+                <h3 style="margin-top: 20px;">Posts</h3>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <code>/api/posts</code>
+                    <p>Get all posts with pagination</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/posts</code>
+                    <p>Create a new post (requires authentication)</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/posts/:id/comments</code>
+                    <p>Add comment to a post (requires authentication)</p>
+                </div>
+
+                <h3 style="margin-top: 20px;">AI/MCP</h3>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/ai/prompt</code>
+                    <p>Submit AI prompt with security validation (Rate limit: 10/min)</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/api/ai/mcp/execute</code>
+                    <p>Execute MCP tool with security measures</p>
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <code>/api/ai/usage</code>
+                    <p>Get AI usage statistics</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Quick Start</h2>
+            <pre><code># Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+
+# Start MongoDB
+docker run -d -p 27017:27017 mongo:latest
+
+# Run the application
+npm run dev
+
+# Server runs on http://localhost:3000</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>🔐 Security Best Practices Implemented</h2>
+            <p>This project follows security guidelines from:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><a href="https://owasp.org/www-project-top-ten/" class="link" target="_blank">OWASP Top 10</a></li>
+                <li><a href="https://github.com/goldbergyoni/nodebestpractices" class="link" target="_blank">Node.js Security Best Practices</a></li>
+                <li><a href="https://expressjs.com/en/advanced/best-practice-security.html" class="link" target="_blank">Express Security Best Practices</a></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📖 Documentation</h2>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><a href="https://github.com/theLaxerz/Magic/blob/main/SECURITY.md" class="link">Security Policy</a></li>
+                <li><a href="https://github.com/theLaxerz/Magic/blob/main/docs/API_DOCUMENTATION.md" class="link">API Documentation</a></li>
+                <li><a href="https://github.com/theLaxerz/Magic/blob/main/docs/SECURITY_BEST_PRACTICES.md" class="link">Security Best Practices Guide</a></li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><strong>Built with ❤️ and 🔒 for the JavaScript, Web, and AI communities</strong></p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/theLaxerz/Magic" class="link">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        async function checkHealth() {
+            const statusDiv = document.getElementById('healthStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = 'Checking server health...';
+
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                statusDiv.innerHTML = `
+                    <strong>✅ Server is healthy!</strong><br>
+                    Status: ${data.status}<br>
+                    Uptime: ${Math.floor(data.uptime)} seconds<br>
+                    Environment: ${data.environment}<br>
+                    Timestamp: ${new Date(data.timestamp).toLocaleString()}
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <strong>❌ Server is not responding</strong><br>
+                    Error: ${error.message}<br>
+                    Please make sure the server is running on port 3000
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
