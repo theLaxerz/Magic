@@ -1,4 +1,8 @@
-<<<<<<< HEAD
+# Environment files
+.env
+.env.local
+.env.stage
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -129,7 +133,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -173,9 +176,19 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-=======
-.env
-.env.local
-.env.stage
 
->>>>>>> b307e7d (Initial Commit: Magic)
+# Qt/C++ specific
+*.o
+*.obj
+*.user
+*.pro.user
+*.autosave
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*.app
+*.exe
+
+# macOS
+.DS_Store
