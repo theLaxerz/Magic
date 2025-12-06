@@ -11,14 +11,7 @@ export const aiPromptValidation = [
     .withMessage('Prompt must be a string')
     .isLength({ min: 1, max: 10000 })
     .withMessage('Prompt must be between 1 and 10000 characters')
-    .trim()
-    .customSanitizer(value => {
-      // Remove potential prompt injection patterns
-      return value
-        .replace(/system:|assistant:|user:/gi, '')
-        .replace(/\[INST\]|\[\/INST\]/g, '')
-        .replace(/<\|.*?\|>/g, '');
-    }),
+    .trim(),
   body('maxTokens')
     .optional()
     .isInt({ min: 1, max: 4000 })

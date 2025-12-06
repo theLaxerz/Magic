@@ -11,6 +11,7 @@ import { catchAsync } from '../middleware/errorHandler.js';
 import { hashPassword, comparePassword, validatePasswordStrength } from '../utils/security.js';
 import { generateToken } from '../middleware/auth.js';
 import { getDB } from '../config/database.js';
+import { ObjectId } from 'mongodb';
 import logger from '../config/logger.js';
 
 const router = express.Router();
@@ -171,7 +172,7 @@ router.get(
     const usersCollection = db.collection('users');
 
     const user = await usersCollection.findOne(
-      { _id: req.user.id },
+      { _id: new ObjectId(req.user.id) },
       { projection: { password: 0 } }
     );
 
@@ -204,7 +205,7 @@ router.put(
     const db = getDB();
     const usersCollection = db.collection('users');
 
-    const user = await usersCollection.findOne({ _id: req.user.id });
+    const user = await usersCollection.findOne({ _id: new ObjectId(req.user.id) });
 
     if (!user) {
       return res.status(404).json({

@@ -87,6 +87,14 @@ export const filterAIResponse = (response) => {
 
 /**
  * Rate limit check for AI requests per user
+ * 
+ * NOTE: This is an in-memory implementation for demonstration purposes.
+ * For production use, replace with Redis or database-backed rate limiting
+ * to ensure rate limits persist across server restarts and work in
+ * distributed/load-balanced environments.
+ * 
+ * Recommended: Use Redis with a library like 'rate-limit-redis' or
+ * implement database-backed counters with TTL.
  */
 export const checkAIRateLimit = (userId, requests = {}) => {
   const now = Date.now();

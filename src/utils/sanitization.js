@@ -25,13 +25,21 @@ export const sanitizeHTML = (input) => {
 
 /**
  * Sanitize SQL input to prevent SQL injection
+ * 
+ * NOTE: This function is provided as an example only.
+ * This application uses MongoDB (NoSQL), not SQL databases.
+ * For MongoDB, use express-mongo-sanitize middleware instead.
+ * 
+ * For actual SQL databases, always use parameterized queries
+ * or prepared statements rather than string manipulation.
  */
 export const sanitizeSQL = (input) => {
   if (typeof input !== 'string') {
     return input;
   }
 
-  // Remove SQL keywords and dangerous characters
+  // This is NOT sufficient for production SQL protection
+  // Always use parameterized queries instead
   return input
     .replace(/(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE|UNION|SCRIPT)\b)/gi, '')
     .replace(/[;'"\\]/g, '');
