@@ -131,9 +131,7 @@ The application expects a MongoDB collection with LinkedIn Messages posts. The e
 
 ## Known Issues
 
-1. **Merge Conflict in .gitignore:** The `.gitignore` file contains unresolved merge conflict markers between Python-specific ignores and environment file ignores.
-
-2. **Placeholder Paths:** The MongoDB C++ driver paths in the `.pro` files are placeholders and need to be configured for each development environment.
+1. **Placeholder Paths:** The MongoDB C++ driver paths in the `.pro` files are placeholders and need to be configured for each development environment.
 
 3. **Generic Database Names:** The database is named "your_database" which should be changed to the actual database name.
 
@@ -166,4 +164,4 @@ Owner: theLaxerz
 
 ---
 
-*This documentation was generated through automated repository analysis on December 6, 2025.*
+*This documentation was generated through automated repository analysis on December 6, 2024.*
